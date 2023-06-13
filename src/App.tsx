@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Start from "./components/Start";
+import Game from "./components/Game";
+import Result from "./components/Result";
+import {useState} from "react";
+import {game, result, start} from "./utils/constants";
+import {Score} from "./utils/types";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [page, setPage] = useState(start);
+  const [name, setName] = useState('YOU');
+  const [globalScore, setGlobalScore] = useState<Score>({comp: 0, player: 0, message: ''})
+
+  const changeName = (name = '') => {
+    name = name.trim();
+    if (name) {
+      setName(name);
+    }
+  }
+
+  const changeScore = (comp: string, player: string) => {
+    const res = {...globalScore, message: 'Draw'}
+    if(comp > player){
+      res.comp++
+      res.message = 'Lose'
+    }
+    if(comp < player){
+      res.player++
+      res.message = 'Win'
+    }
+    setGlobalScore(res);
+  }
+
+  switch (page) {
+    case game:
+      return <Game name={name} changePage={setPage} changeScore={changeScore}/>;
+    case result:
+      return <Result score={globalScore} changePage={setPage}/>;
+    default:
+      return <Start changeName={changeName} changePage={setPage}/>;
+  }
 }
 
 export default App;
