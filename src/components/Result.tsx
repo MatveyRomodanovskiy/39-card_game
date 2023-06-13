@@ -3,14 +3,14 @@ import {game} from "../utils/constants";
 import {Score} from "../utils/types";
 interface Props {
     changePage: (page: string) => void,
-    score: Score,
+    globalScore: Score,
 
 }
-const Result = ({changePage, score}: Props) => {
+const Result = ({changePage, globalScore}: Props) => {
     return (
         <div>
-            <h1>{score.message}</h1>
-            <h2>{score.player} - {score.comp}</h2>
+            <h1>{globalScore.message}</h1>
+            <h2>Global score: {globalScore.player} - {globalScore.comp}</h2>
             <button onClick={() => changePage(game)}>Again?</button>
         </div>
     );

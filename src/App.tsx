@@ -18,24 +18,13 @@ function App() {
     }
   }
 
-  const changeScore = (comp: string, player: string) => {
-    const res = {...globalScore, message: 'Draw'}
-    if(comp > player){
-      res.comp++
-      res.message = 'Lose'
-    }
-    if(comp < player){
-      res.player++
-      res.message = 'Win'
-    }
-    setGlobalScore(res);
-  }
+
 
   switch (page) {
     case game:
-      return <Game name={name} changePage={setPage} changeScore={changeScore}/>;
+      return <Game name={name} changePage={setPage} globalScore={globalScore} changeScore={setGlobalScore}/>;
     case result:
-      return <Result score={globalScore} changePage={setPage}/>;
+      return <Result globalScore={globalScore} changePage={setPage}/>;
     default:
       return <Start changeName={changeName} changePage={setPage}/>;
   }
